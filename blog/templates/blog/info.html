@@ -1,0 +1,28 @@
+{%  if isAjax == 0 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章详细--{{article.name}}</title>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico'  %}" type="image/x-icon"/>
+    <script src="{% static 'css/base.css' %}"></script>
+    <script src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+</head>
+<body>
+    <h2>{{ article.name }}</h2>
+    <h3>{{ article.userId }}--{{ article.intTime|date:"Y-m-d H:i:s"  }}</h3>
+    <div>
+        {{ article.content }}
+    </div>
+</body>
+</html>
+{% else %}
+    <h2>{{ article.name }}</h2>
+    <h3>{{ article.userId }}--{{ article.intTime|date:"Y-m-d H:i:s"  }}</h3>
+    <div>
+        {{ article.content }}
+    </div>
+{% endif %}

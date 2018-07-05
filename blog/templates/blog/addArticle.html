@@ -1,0 +1,61 @@
+{% if isAjax == 0 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加文章</title>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico'  %}" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" type="text/css"  href="{% static 'blog/css/add.css' %}" />
+    {#<script src="/statics/jquery-1.7.2.min.js"></script>#}
+    <script src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="conCenter">
+            <form action="/blog/add" id="form1">
+                <fieldset>
+                    <legend>添加文章：</legend>
+                    <label>标题：<input name="name"  class="input" placeholder="请输入标题..."/> </label>
+                    <label>内容：<textarea name="content"  class="input" placeholder="请输入内容..." rows="5"></textarea> </label>
+                    <label><input type="button" class="btn_submit" value="提交" /></label>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+{% else %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css"  href="{% static 'blog/css/add.css' %}" />
+    <form action="/blog/add" id="form1">
+        <fieldset>
+            <legend>添加文章：</legend>
+            <label>标题：<input name="name"  class="input" placeholder="请输入标题..."/> </label>
+            <label>内容：<textarea name="content"  class="input" placeholder="请输入内容..." rows="5"></textarea> </label>
+            <label><input type="button" class="btn_submit" value="提交" /></label>
+        </fieldset>
+    </form>
+{% endif %}
+<script>
+    $("#form1 .btn_submit").click(function () {
+        $("#form1").ajaxSubmit({
+           type: "post",  //提交方式
+           dataType: "json", //数据类型
+           success: function (data) { //提交成功的回调函数
+               console.log(data)
+               if(data&&data.result==1){
+                   alert(data.msg||"添加成功");
+                   window.location.reload();
+               }else{
+                   alert(data.msg||"添加失败");
+               }
+           }
+        });
+        return false;
+    });
+</script>

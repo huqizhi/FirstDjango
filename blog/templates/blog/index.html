@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章列表</title>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico'  %}" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/base.css' %}" />
+    {#<script src="/statics/jquery-1.7.2.min.js"></script>#}
+    <script src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="conLeft">
+            <legend>热门文章列表：<a href="javascript:void(0);" url="/blog/toadd" class="btn btnWriteArticle">写文章</a></legend>
+            <ul>
+                {% for art in articles %}
+                    {% comment %}<li><a href="javascript:void(0);" url="/blog/toinfo/{{ art.id }}"><span class="hot hot{{ forloop.counter }}">{{ forloop.counter }}</span>{{ art.name }}</a></li>{% endcomment %}
+                    <li><a href="javascript:void(0);" url="/blog/toinfo/{{ art.0 }}"><span class="hot hot{{ forloop.counter }}">{{ forloop.counter }}</span>{{ art.1 }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="conCenter" style="float:right;">
+
+        </div>
+    <script>
+        $(".conLeft ul li a").click(function(){
+            var $this = $(this);
+            $.ajax({
+                url:$this.attr("url"),
+                data:{ajax:1, _t:new Date().getTime()},
+                dataType:"html",
+                success:function (data) {
+                    if(data&&$.trim(data)!=""){
+                        $(".conCenter").html(data);
+                    }
+                }
+            })
+        });
+        $(".btnWriteArticle").click(function(){
+            var $this = $(this);
+            $.ajax({
+                url:$this.attr("url"),
+                data:{ajax:1, _t:new Date().getTime()},
+                dataType:"html",
+                success:function (data) {
+                    if(data&&$.trim(data)!=""){
+                        $(".conCenter").html(data);
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>
